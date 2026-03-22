@@ -6,7 +6,7 @@
 #------------------------------------------------------------------------------
 # Phony targets
 #------------------------------------------------------------------------------
-.PHONY: all test clean help benchmark benchmark-asan
+.PHONY: all test clean help benchmark benchmark-asan benchmark-valgrind benchmark-massif
 
 # Disable implicit rules for .sn.c files (these are compiled by the Sindarin compiler)
 %.sn: %.sn.c
@@ -135,17 +135,61 @@ benchmark-asan: | $(BIN_DIR)
 	rm -rf "$$TMPDIR"
 
 #------------------------------------------------------------------------------
+# benchmark-valgrind - Run benchmarks under valgrind memcheck (leak detection)
+#------------------------------------------------------------------------------
+benchmark-valgrind: $(BENCH_BIN)
+	@echo ""
+	@echo "Running benchmark under valgrind memcheck..."
+	@echo ""
+	@valgrind --leak-check=full --show-leak-kinds=all --error-exitcode=1 \
+		./$(BENCH_BIN) 2>&1 | tee /tmp/collections_valgrind.txt; \
+	EXIT_CODE=$$?; \
+	echo ""; \
+	echo "  Valgrind Summary"; \
+	echo "  -----------------------------------------"; \
+	grep -E "HEAP SUMMARY|in use at exit|total heap|All heap|definitely|indirectly|possibly|ERROR SUMMARY" \
+		/tmp/collections_valgrind.txt 2>/dev/null | sed 's/^==[0-9]*==//'; \
+	echo ""; \
+	rm -f /tmp/collections_valgrind.txt; \
+	if [ $$EXIT_CODE -ne 0 ]; then echo "  RESULT: LEAKS DETECTED"; exit 1; \
+	else echo "  RESULT: No leaks"; fi; \
+	echo ""
+
+#------------------------------------------------------------------------------
+# benchmark-massif - Run benchmarks under valgrind massif (heap profiling)
+#------------------------------------------------------------------------------
+MASSIF_OUT := /tmp/collections_massif.out
+
+benchmark-massif: $(BENCH_BIN)
+	@echo ""
+	@echo "Running benchmark under valgrind massif..."
+	@echo ""
+	@valgrind --tool=massif --pages-as-heap=yes --massif-out-file=$(MASSIF_OUT) \
+		./$(BENCH_BIN) 2>&1 | grep -v "^==" ; \
+	echo ""; \
+	echo "  Massif Heap Profile"; \
+	echo "  -----------------------------------------"; \
+	ms_print $(MASSIF_OUT) 2>/dev/null | head -30; \
+	echo ""; \
+	PEAK=$$(ms_print $(MASSIF_OUT) 2>/dev/null | grep "^  .*(peak)" | head -1); \
+	echo "  Peak snapshot: $$PEAK"; \
+	echo "  Full report:   ms_print $(MASSIF_OUT)"; \
+	echo ""
+
+#------------------------------------------------------------------------------
 # help - Show available targets
 #------------------------------------------------------------------------------
 help:
 	@echo "Sindarin Collections Package"
 	@echo ""
 	@echo "Targets:"
-	@echo "  make test            Run self-tests"
-	@echo "  make benchmark       Run benchmarks (optimized)"
-	@echo "  make benchmark-asan  Run benchmarks with ASAN (memory leak detection)"
-	@echo "  make clean           Remove build artifacts"
-	@echo "  make help            Show this help"
+	@echo "  make test               Run self-tests"
+	@echo "  make benchmark          Run benchmarks (optimized)"
+	@echo "  make benchmark-asan     Run benchmarks with ASAN (memory safety)"
+	@echo "  make benchmark-valgrind Run benchmarks with valgrind memcheck (leak detection)"
+	@echo "  make benchmark-massif   Run benchmarks with valgrind massif (heap profiling)"
+	@echo "  make clean              Remove build artifacts"
+	@echo "  make help               Show this help"
 	@echo ""
 	@echo "Dependencies are managed via sn.yaml package references."
 	@echo ""
