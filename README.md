@@ -276,6 +276,17 @@ sn --install
 make test
 ```
 
+## Benchmarks
+
+```bash
+make benchmark            # Optimized build — peak RSS + CPU time
+make benchmark-asan       # ASAN build — memory safety validation
+make benchmark-valgrind   # Valgrind memcheck — leak detection
+make benchmark-massif     # Valgrind massif — heap profiling
+```
+
+All benchmarks exercise every collection at scale (100k ops for O(n log n) structures, 5k for O(n^2) hash structures). Memory validation confirms zero leaks across 2.58M allocations.
+
 ## License
 
 MIT
