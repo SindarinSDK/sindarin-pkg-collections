@@ -1,0 +1,49 @@
+# Queue<T> — FIFO queue backed by a dynamic array with head pointer
+
+struct QueueIter<T> =>
+    items: T[]
+    head: int
+    remaining: int
+
+    fn hasNext(): bool =>
+        return self.remaining > 0
+
+    fn next(): T =>
+        var v: T = self.items[self.head]
+        self.head = self.head + 1
+        self.remaining = self.remaining - 1
+        return v
+
+struct Queue<T> =>
+    items: T[]
+    head: int
+    count: int
+
+    fn enqueue(item: T): void =>
+        self.items.push(item)
+        self.count = self.count + 1
+
+    fn dequeue(): T =>
+        var v: T = self.items[self.head]
+        self.head = self.head + 1
+        self.count = self.count - 1
+        # Compact when wasted space exceeds active elements
+        if self.head > self.count &&self.count > 0 =>
+            var new_items: T[] = {}
+            for i in 0..self.count =>
+                new_items.push(self.items[self.head + i])
+            self.items = new_items
+            self.head = 0
+        return v
+
+    fn peek(): T =>
+        return self.items[self.head]
+
+    fn size(): int =>
+        return self.count
+
+    fn isEmpty(): bool =>
+        return self.count == 0
+
+    fn iter(): QueueIter<T> =>
+        return QueueIter<T> { items: self.items, head: self.head, remaining: self.count }

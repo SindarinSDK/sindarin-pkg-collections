@@ -1,0 +1,5 @@
+test_list_int: PASS
+test_list_int_iter: PASS
+test_list_str: PASS
+test_list_str_iter: PASS
+test_list_clear: PASS

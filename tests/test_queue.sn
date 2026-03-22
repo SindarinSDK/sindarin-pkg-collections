@@ -1,0 +1,76 @@
+import "../src/queue"
+
+fn main(): void =>
+    # --- Basic FIFO operations ---
+    var q: Queue<int> = Queue<int> { items: {}, head: 0, count: 0 }
+    assert(q.isEmpty(), "new queue should be empty")
+    assert(q.size() == 0, "new queue size")
+
+    q.enqueue(10)
+    q.enqueue(20)
+    q.enqueue(30)
+    assert(q.size() == 3, "size after 3 enqueues")
+    assert(!q.isEmpty(), "queue not empty")
+    assert(q.peek() == 10, "peek should be 10 (FIFO)")
+
+    var first: int = q.dequeue()
+    assert(first == 10, "dequeue should return 10")
+    assert(q.size() == 2, "size after dequeue")
+    assert(q.peek() == 20, "peek after dequeue")
+
+    var second: int = q.dequeue()
+    assert(second == 20, "dequeue should return 20")
+
+    var third: int = q.dequeue()
+    assert(third == 30, "dequeue should return 30")
+    assert(q.isEmpty(), "queue empty after all dequeues")
+    println("test_queue_basic: PASS")
+
+    # --- Enqueue/dequeue interleaved ---
+    var q2: Queue<int> = Queue<int> { items: {}, head: 0, count: 0 }
+    for i in 0..20 =>
+        q2.enqueue(i)
+    for i in 0..15 =>
+        var v: int = q2.dequeue()
+        assert(v == i, "interleaved dequeue order")
+    for i in 20..30 =>
+        q2.enqueue(i)
+    assert(q2.size() == 15, "size after interleave")
+    for i in 15..30 =>
+        var v: int = q2.dequeue()
+        assert(v == i, "interleaved dequeue continued")
+    assert(q2.isEmpty(), "empty after drain")
+    println("test_queue_interleaved: PASS")
+
+    # --- Growth ---
+    var q3: Queue<int> = Queue<int> { items: {}, head: 0, count: 0 }
+    for i in 0..100 =>
+        q3.enqueue(i)
+    assert(q3.size() == 100, "size after 100 enqueues")
+    for i in 0..100 =>
+        var v: int = q3.dequeue()
+        assert(v == i, "dequeue order after growth")
+    println("test_queue_growth: PASS")
+
+    # --- Queue<str> ---
+    var qs: Queue<str> = Queue<str> { items: {}, head: 0, count: 0 }
+    qs.enqueue("alpha")
+    qs.enqueue("beta")
+    qs.enqueue("gamma")
+    assert(qs.peek() == "alpha", "str peek")
+    assert(qs.dequeue() == "alpha", "str dequeue 1")
+    assert(qs.dequeue() == "beta", "str dequeue 2")
+    assert(qs.dequeue() == "gamma", "str dequeue 3")
+    println("test_queue_str: PASS")
+
+    # --- Iteration ---
+    var qi: Queue<int> = Queue<int> { items: {}, head: 0, count: 0 }
+    qi.enqueue(1)
+    qi.enqueue(2)
+    qi.enqueue(3)
+    var sum: int = 0
+    for x in qi =>
+        sum = sum + x
+    assert(sum == 6, "iteration sum")
+    assert(qi.size() == 3, "iteration should not consume")
+    println("test_queue_iter: PASS")

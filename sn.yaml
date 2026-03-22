@@ -1,0 +1,8 @@
+name: sindarin-pkg-collections
+version: 1.0.0
+license: MIT
+description: Pure Sindarin collections library — List, HashMap, HashSet, Queue, MinHeap
+dependencies:
+- name: sindarin-pkg-test
+  git: https://github.com/SindarinSDK/sindarin-pkg-test.git
+  branch: main

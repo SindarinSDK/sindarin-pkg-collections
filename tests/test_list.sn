@@ -1,0 +1,65 @@
+import "../src/list"
+
+fn main(): void =>
+    # --- List<int> ---
+    var nums: List<int> = List<int> { items: {}, count: 0 }
+    assert(nums.isEmpty(), "new list should be empty")
+    assert(nums.size() == 0, "new list size should be 0")
+
+    nums.push(10)
+    nums.push(20)
+    nums.push(30)
+    assert(nums.size() == 3, "size after 3 pushes")
+    assert(!nums.isEmpty(), "list should not be empty")
+
+    assert(nums.get(0) == 10, "get(0) == 10")
+    assert(nums.get(1) == 20, "get(1) == 20")
+    assert(nums.get(2) == 30, "get(2) == 30")
+
+    nums.set(1, 99)
+    assert(nums.get(1) == 99, "set(1, 99) then get(1)")
+
+    assert(nums.contains(10), "contains(10)")
+    assert(nums.contains(99), "contains(99)")
+    assert(!nums.contains(42), "!contains(42)")
+
+    var top: int = nums.pop()
+    assert(top == 30, "pop should return 30")
+    assert(nums.size() == 2, "size after pop")
+
+    println("test_list_int: PASS")
+
+    # --- List<int> iteration ---
+    var items: List<int> = List<int> { items: {}, count: 0 }
+    items.push(1)
+    items.push(2)
+    items.push(3)
+    var sum: int = 0
+    for x in items =>
+        sum = sum + x
+    assert(sum == 6, "iteration sum should be 6")
+    println("test_list_int_iter: PASS")
+
+    # --- List<str> ---
+    var words: List<str> = List<str> { items: {}, count: 0 }
+    words.push("hello")
+    words.push("world")
+    assert(words.size() == 2, "str list size")
+    assert(words.get(0) == "hello", "str get(0)")
+    assert(words.get(1) == "world", "str get(1)")
+    assert(words.contains("hello"), "str contains hello")
+    assert(!words.contains("nope"), "str !contains nope")
+    println("test_list_str: PASS")
+
+    # --- List<str> iteration ---
+    var count: int = 0
+    for w in words =>
+        count = count + 1
+    assert(count == 2, "str iteration count")
+    println("test_list_str_iter: PASS")
+
+    # --- List clear ---
+    nums.clear()
+    assert(nums.size() == 0, "size after clear")
+    assert(nums.isEmpty(), "isEmpty after clear")
+    println("test_list_clear: PASS")

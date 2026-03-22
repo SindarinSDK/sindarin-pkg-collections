@@ -1,0 +1,59 @@
+# List<T> — Dynamic array-backed list
+#
+# Usage:
+#   import "sindarin-pkg-collections/src/list"
+#
+#   var nums: List<int> = List<int> { items: {}, count: 0 }
+#   nums.push(1)
+#   nums.push(2)
+#   for n in nums =>
+#       print(n)
+
+struct ListIter<T> =>
+    items: T[]
+    index: int
+
+    fn hasNext(): bool =>
+        return self.index < len(self.items)
+
+    fn next(): T =>
+        var v: T = self.items[self.index]
+        self.index = self.index + 1
+        return v
+
+struct List<T> =>
+    items: T[]
+    count: int
+
+    fn push(item: T): void =>
+        self.items.push(item)
+        self.count = self.count + 1
+
+    fn pop(): T =>
+        self.count = self.count - 1
+        return self.items.pop()
+
+    fn get(index: int): T =>
+        return self.items[index]
+
+    fn set(index: int, value: T): void =>
+        self.items[index] = value
+
+    fn size(): int =>
+        return self.count
+
+    fn isEmpty(): bool =>
+        return self.count == 0
+
+    fn contains(item: T): bool =>
+        for i in 0..self.count =>
+            if self.items[i] == item =>
+                return true
+        return false
+
+    fn clear(): void =>
+        self.items = {}
+        self.count = 0
+
+    fn iter(): ListIter<T> =>
+        return ListIter<T> { items: self.items, index: 0 }
