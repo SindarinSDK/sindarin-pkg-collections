@@ -1,0 +1,51 @@
+import "../src/deque"
+
+fn main(): void =>
+    var d: Deque<int> = Deque<int> { items: {}, head: 0, count: 0 }
+    assert(d.isEmpty(), "new deque empty")
+
+    # Push back
+    d.pushBack(1)
+    d.pushBack(2)
+    d.pushBack(3)
+    assert(d.size() == 3, "size after pushBack")
+    assert(d.peekFront() == 1, "peekFront")
+    assert(d.peekBack() == 3, "peekBack")
+
+    # Pop front (FIFO order)
+    assert(d.popFront() == 1, "popFront 1")
+    assert(d.popFront() == 2, "popFront 2")
+    assert(d.size() == 1, "size after 2 popFronts")
+    println("test_deque_basic: PASS")
+
+    # Push front
+    var d2: Deque<int> = Deque<int> { items: {}, head: 0, count: 0 }
+    d2.pushBack(2)
+    d2.pushBack(3)
+    d2.pushFront(1)
+    assert(d2.peekFront() == 1, "pushFront peekFront")
+    assert(d2.popFront() == 1, "pushFront popFront")
+    assert(d2.popFront() == 2, "after pushFront order")
+    assert(d2.popFront() == 3, "after pushFront order 2")
+    println("test_deque_pushfront: PASS")
+
+    # Pop back
+    var d3: Deque<int> = Deque<int> { items: {}, head: 0, count: 0 }
+    d3.pushBack(10)
+    d3.pushBack(20)
+    d3.pushBack(30)
+    assert(d3.popBack() == 30, "popBack")
+    assert(d3.popBack() == 20, "popBack 2")
+    assert(d3.size() == 1, "size after popBacks")
+    println("test_deque_popback: PASS")
+
+    # Iteration
+    var d4: Deque<int> = Deque<int> { items: {}, head: 0, count: 0 }
+    d4.pushBack(1)
+    d4.pushBack(2)
+    d4.pushBack(3)
+    var sum: int = 0
+    for x in d4 =>
+        sum = sum + x
+    assert(sum == 6, "iteration sum")
+    println("test_deque_iter: PASS")

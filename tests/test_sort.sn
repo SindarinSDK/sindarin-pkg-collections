@@ -1,0 +1,74 @@
+import "../src/sort"
+
+struct Val =>
+    n: int
+
+    fn compare(other: Val): int =>
+        if self.n < other.n => return -1
+        if self.n > other.n => return 1
+        return 0
+
+fn isSorted(arr: Val[]): bool =>
+    for i in 1..len(arr) =>
+        if arr[i].compare(arr[i - 1]) < 0 =>
+            return false
+    return true
+
+fn main(): void =>
+    # --- Merge sort ---
+    var a: Val[] = { Val{n:5}, Val{n:3}, Val{n:1}, Val{n:4}, Val{n:2} }
+    var sorted: Val[] = mergeSort(a)
+    assert(isSorted(sorted), "mergeSort basic")
+    assert(sorted[0].n == 1, "mergeSort first")
+    assert(sorted[4].n == 5, "mergeSort last")
+    println("test_merge_sort: PASS")
+
+    # Empty
+    var empty: Val[] = {}
+    var se: Val[] = mergeSort(empty)
+    assert(len(se) == 0, "mergeSort empty")
+    println("test_merge_sort_empty: PASS")
+
+    # Single
+    var single: Val[] = { Val{n:42} }
+    var ss: Val[] = mergeSort(single)
+    assert(len(ss) == 1, "mergeSort single len")
+    assert(ss[0].n == 42, "mergeSort single value")
+    println("test_merge_sort_single: PASS")
+
+    # Already sorted
+    var asc: Val[] = { Val{n:1}, Val{n:2}, Val{n:3}, Val{n:4}, Val{n:5} }
+    var sa: Val[] = mergeSort(asc)
+    assert(isSorted(sa), "mergeSort already sorted")
+    println("test_merge_sort_sorted: PASS")
+
+    # Reverse sorted
+    var desc: Val[] = { Val{n:5}, Val{n:4}, Val{n:3}, Val{n:2}, Val{n:1} }
+    var sd: Val[] = mergeSort(desc)
+    assert(isSorted(sd), "mergeSort reverse")
+    assert(sd[0].n == 1, "mergeSort reverse first")
+    println("test_merge_sort_reverse: PASS")
+
+    # Duplicates
+    var dups: Val[] = { Val{n:3}, Val{n:1}, Val{n:3}, Val{n:1}, Val{n:2} }
+    var sdup: Val[] = mergeSort(dups)
+    assert(isSorted(sdup), "mergeSort duplicates")
+    println("test_merge_sort_duplicates: PASS")
+
+    # --- Insertion sort ---
+    var b: Val[] = { Val{n:5}, Val{n:3}, Val{n:1}, Val{n:4}, Val{n:2} }
+    var isorted: Val[] = insertionSort(b)
+    assert(isSorted(isorted), "insertionSort basic")
+    assert(isorted[0].n == 1, "insertionSort first")
+    assert(isorted[4].n == 5, "insertionSort last")
+    println("test_insertion_sort: PASS")
+
+    # Large
+    var large: Val[] = {}
+    for i in 0..200 =>
+        large.push(Val { n: 199 - i })
+    var sl: Val[] = mergeSort(large)
+    assert(isSorted(sl), "mergeSort large")
+    assert(sl[0].n == 0, "mergeSort large first")
+    assert(sl[199].n == 199, "mergeSort large last")
+    println("test_merge_sort_large: PASS")

@@ -1,0 +1,3 @@
+test_unionfind_basic: PASS
+test_unionfind_idempotent: PASS
+test_unionfind_large: PASS

@@ -1,0 +1,4 @@
+test_deque_basic: PASS
+test_deque_pushfront: PASS
+test_deque_popback: PASS
+test_deque_iter: PASS

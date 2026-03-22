@@ -1,0 +1,76 @@
+import "../src/graph"
+
+fn main(): void =>
+    # --- BFS ---
+    var g: Graph = newGraph(6)
+    # 0 -> 1 -> 3
+    # 0 -> 2 -> 4
+    # 3 -> 5
+    g.addEdge(0, 1)
+    g.addEdge(0, 2)
+    g.addEdge(1, 3)
+    g.addEdge(2, 4)
+    g.addEdge(3, 5)
+
+    var bfs_result: int[] = g.bfs(0)
+    assert(len(bfs_result) == 6, "bfs visits all 6 vertices")
+    assert(bfs_result[0] == 0, "bfs starts at source")
+    # Level 1: 1, 2 (in order)
+    assert(bfs_result[1] == 1, "bfs level 1 first")
+    assert(bfs_result[2] == 2, "bfs level 1 second")
+    println("test_graph_bfs: PASS")
+
+    # --- DFS ---
+    var dfs_result: int[] = g.dfs(0)
+    assert(len(dfs_result) == 6, "dfs visits all 6 vertices")
+    assert(dfs_result[0] == 0, "dfs starts at source")
+    println("test_graph_dfs: PASS")
+
+    # --- Topological sort ---
+    # DAG: 0 -> 1, 0 -> 2, 1 -> 3, 2 -> 3
+    var dag: Graph = newGraph(4)
+    dag.addEdge(0, 1)
+    dag.addEdge(0, 2)
+    dag.addEdge(1, 3)
+    dag.addEdge(2, 3)
+
+    var topo: int[] = dag.topologicalSort()
+    assert(len(topo) == 4, "topo sort includes all vertices")
+    assert(topo[0] == 0, "topo sort: 0 first (no incoming)")
+
+    # Verify ordering: for each edge u->v, u appears before v
+    var pos: int[] = {0, 0, 0, 0}
+    for i in 0..4 =>
+        pos[topo[i]] = i
+    assert(pos[0] < pos[1], "topo: 0 before 1")
+    assert(pos[0] < pos[2], "topo: 0 before 2")
+    assert(pos[1] < pos[3], "topo: 1 before 3")
+    assert(pos[2] < pos[3], "topo: 2 before 3")
+    println("test_graph_topo: PASS")
+
+    # --- Cycle detection (topo sort returns empty) ---
+    var cyc: Graph = newGraph(3)
+    cyc.addEdge(0, 1)
+    cyc.addEdge(1, 2)
+    cyc.addEdge(2, 0)
+    var topo_cyc: int[] = cyc.topologicalSort()
+    assert(len(topo_cyc) == 0, "topo sort detects cycle")
+    println("test_graph_cycle: PASS")
+
+    # --- Disconnected graph ---
+    var disc: Graph = newGraph(4)
+    disc.addEdge(0, 1)
+    disc.addEdge(2, 3)
+    var bfs_disc: int[] = disc.bfs(0)
+    assert(len(bfs_disc) == 2, "bfs only visits reachable")
+    println("test_graph_disconnected: PASS")
+
+    # --- Large DAG ---
+    var big: Graph = newGraph(100)
+    for i in 0..99 =>
+        big.addEdge(i, i + 1)
+    var topo_big: int[] = big.topologicalSort()
+    assert(len(topo_big) == 100, "large topo sort")
+    for i in 0..100 =>
+        assert(topo_big[i] == i, "large topo order")
+    println("test_graph_large: PASS")

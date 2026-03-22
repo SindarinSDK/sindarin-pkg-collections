@@ -1,0 +1,22 @@
+# Stack<T> — LIFO stack backed by a dynamic array
+
+struct Stack<T> =>
+    items: T[]
+    count: int
+
+    fn push(item: T): void =>
+        self.items.push(item)
+        self.count = self.count + 1
+
+    fn pop(): T =>
+        self.count = self.count - 1
+        return self.items.pop()
+
+    fn peek(): T =>
+        return self.items[self.count - 1]
+
+    fn size(): int =>
+        return self.count
+
+    fn isEmpty(): bool =>
+        return self.count == 0

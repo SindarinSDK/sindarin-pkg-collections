@@ -1,0 +1,107 @@
+# Graph — Directed graph with adjacency lists
+#
+# Vertices are identified by integer indices 0..n-1.
+# Provides BFS, DFS, and topological sort.
+
+struct Graph =>
+    adj: int[][]
+    vertex_count: int
+
+    fn addEdge(from: int, to: int): void =>
+        self.adj[from].push(to)
+
+    fn neighbors(v: int): int[] =>
+        return self.adj[v]
+
+    fn vertexCount(): int =>
+        return self.vertex_count
+
+    # Breadth-first search from source. Returns visited order.
+    fn bfs(source: int): int[] =>
+        var visited: bool[] = {}
+        for i in 0..self.vertex_count =>
+            visited.push(false)
+        var queue: int[] = {}
+        var result: int[] = {}
+
+        visited[source] = true
+        queue.push(source)
+        var head: int = 0
+
+        while head < len(queue) =>
+            var v: int = queue[head]
+            head = head + 1
+            result.push(v)
+            for i in 0..len(self.adj[v]) =>
+                var w: int = self.adj[v][i]
+                if !visited[w] =>
+                    visited[w] = true
+                    queue.push(w)
+
+        return result
+
+    # Depth-first search from source. Returns visited order.
+    fn dfs(source: int): int[] =>
+        var visited: bool[] = {}
+        for i in 0..self.vertex_count =>
+            visited.push(false)
+        var stack: int[] = {}
+        var result: int[] = {}
+
+        stack.push(source)
+
+        while len(stack) > 0 =>
+            var v: int = stack.pop()
+            if !visited[v] =>
+                visited[v] = true
+                result.push(v)
+                # Push neighbors in reverse for consistent left-to-right order
+                var nbrs: int[] = self.adj[v]
+                var j: int = len(nbrs) - 1
+                while j >= 0 =>
+                    if !visited[nbrs[j]] =>
+                        stack.push(nbrs[j])
+                    j = j - 1
+
+        return result
+
+    # Topological sort using Kahn's algorithm. Returns sorted order.
+    # Returns empty array if cycle detected.
+    fn topologicalSort(): int[] =>
+        var in_degree: int[] = {}
+        for i in 0..self.vertex_count =>
+            in_degree.push(0)
+
+        for u in 0..self.vertex_count =>
+            for i in 0..len(self.adj[u]) =>
+                var v: int = self.adj[u][i]
+                in_degree[v] = in_degree[v] + 1
+
+        var queue: int[] = {}
+        var head: int = 0
+        for i in 0..self.vertex_count =>
+            if in_degree[i] == 0 =>
+                queue.push(i)
+
+        var result: int[] = {}
+        while head < len(queue) =>
+            var u: int = queue[head]
+            head = head + 1
+            result.push(u)
+            for i in 0..len(self.adj[u]) =>
+                var v: int = self.adj[u][i]
+                in_degree[v] = in_degree[v] - 1
+                if in_degree[v] == 0 =>
+                    queue.push(v)
+
+        # If we didn't visit all vertices, there's a cycle
+        if len(result) != self.vertex_count =>
+            return {}
+        return result
+
+fn newGraph(n: int): Graph =>
+    var adj: int[][] = {}
+    for i in 0..n =>
+        var empty: int[] = {}
+        adj.push(empty)
+    return Graph { adj: adj, vertex_count: n }

@@ -20,10 +20,17 @@ Then run `sn --install` to fetch the package.
 | Collection | Import | Description |
 |------------|--------|-------------|
 | `List<T>` | `import "collections/list"` | Dynamic array with push/pop/get/set |
+| `Stack<T>` | `import "collections/stack"` | LIFO stack with push/pop/peek |
 | `Queue<T>` | `import "collections/queue"` | FIFO queue with enqueue/dequeue |
+| `Deque<T>` | `import "collections/deque"` | Double-ended queue |
 | `MinHeap<T: Comparable>` | `import "collections/heap"` | Priority queue (min-heap) |
 | `HashSet<T: Hashable>` | `import "collections/set"` | Set with add/contains |
 | `HashMap<K: Hashable, V>` | `import "collections/map"` | Key-value map with set/get/has |
+| `BitSet` | `import "collections/bitset"` | Fixed-size bit vector |
+| `UnionFind` | `import "collections/unionfind"` | Disjoint set with path compression |
+| `Graph` | `import "collections/graph"` | Directed graph with BFS/DFS/topological sort |
+| `mergeSort` | `import "collections/sort"` | Stable O(n log n) merge sort |
+| `insertionSort` | `import "collections/sort"` | Stable O(n^2) insertion sort |
 
 ## Quick Start
 
@@ -192,6 +199,75 @@ for entry in scores =>
 | `size` | `fn size(): int` | Number of entries |
 | `isEmpty` | `fn isEmpty(): bool` | True if empty |
 | `iter` | `fn iter(): HashMapIter<K, V>` | Iterator yielding `Entry<K, V>` |
+
+### Stack\<T\>
+
+| Method | Signature | Description |
+|--------|-----------|-------------|
+| `push` | `fn push(item: T): void` | Push item onto top |
+| `pop` | `fn pop(): T` | Remove and return top item |
+| `peek` | `fn peek(): T` | View top item without removing |
+| `size` | `fn size(): int` | Number of items |
+| `isEmpty` | `fn isEmpty(): bool` | True if empty |
+
+### Deque\<T\>
+
+| Method | Signature | Description |
+|--------|-----------|-------------|
+| `pushBack` | `fn pushBack(item: T): void` | Add item to back |
+| `pushFront` | `fn pushFront(item: T): void` | Add item to front |
+| `popBack` | `fn popBack(): T` | Remove and return back item |
+| `popFront` | `fn popFront(): T` | Remove and return front item |
+| `peekBack` | `fn peekBack(): T` | View back item |
+| `peekFront` | `fn peekFront(): T` | View front item |
+| `size` | `fn size(): int` | Number of items |
+| `isEmpty` | `fn isEmpty(): bool` | True if empty |
+| `iter` | `fn iter(): DequeIter<T>` | Iterator for `for x in deque` |
+
+### BitSet
+
+| Method | Signature | Description |
+|--------|-----------|-------------|
+| `set` | `fn set(index: int): void` | Set bit at index |
+| `clear` | `fn clear(index: int): void` | Clear bit at index |
+| `get` | `fn get(index: int): bool` | Test if bit is set |
+| `clearAll` | `fn clearAll(): void` | Clear all bits |
+| `popcount` | `fn popcount(): int` | Count set bits |
+
+Create with: `newBitSet(n)` where `n` is the number of bits.
+
+### UnionFind
+
+| Method | Signature | Description |
+|--------|-----------|-------------|
+| `find` | `fn find(x: int): int` | Find root (with path compression) |
+| `union` | `fn union(x: int, y: int): void` | Merge sets containing x and y |
+| `connected` | `fn connected(x: int, y: int): bool` | True if x and y in same set |
+| `componentCount` | `fn componentCount(): int` | Number of disjoint sets |
+
+Create with: `newUnionFind(n)` where `n` is the number of elements.
+
+### Graph
+
+| Method | Signature | Description |
+|--------|-----------|-------------|
+| `addEdge` | `fn addEdge(from: int, to: int): void` | Add directed edge |
+| `neighbors` | `fn neighbors(v: int): int[]` | Get adjacency list |
+| `bfs` | `fn bfs(source: int): int[]` | Breadth-first traversal order |
+| `dfs` | `fn dfs(source: int): int[]` | Depth-first traversal order |
+| `topologicalSort` | `fn topologicalSort(): int[]` | Topological order (empty if cycle) |
+
+Create with: `newGraph(n)` where `n` is the number of vertices.
+
+### Sort Functions
+
+```sindarin
+import "collections/sort"
+
+# Elements must implement Comparable (compare(other: Self): int)
+var sorted: Val[] = mergeSort(arr)      # stable, O(n log n)
+var sorted: Val[] = insertionSort(arr)  # stable, O(n^2)
+```
 
 ## Testing
 

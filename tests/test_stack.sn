@@ -1,0 +1,29 @@
+import "../src/stack"
+
+fn main(): void =>
+    var s: Stack<int> = Stack<int> { items: {}, count: 0 }
+    assert(s.isEmpty(), "new stack empty")
+    assert(s.size() == 0, "new stack size")
+
+    s.push(10)
+    s.push(20)
+    s.push(30)
+    assert(s.size() == 3, "size after pushes")
+    assert(s.peek() == 30, "peek top (LIFO)")
+
+    assert(s.pop() == 30, "pop 1")
+    assert(s.pop() == 20, "pop 2")
+    assert(s.pop() == 10, "pop 3")
+    assert(s.isEmpty(), "empty after pops")
+    println("test_stack_basic: PASS")
+
+    # Stack<str>
+    var ss: Stack<str> = Stack<str> { items: {}, count: 0 }
+    ss.push("a")
+    ss.push("b")
+    ss.push("c")
+    assert(ss.peek() == "c", "str peek")
+    assert(ss.pop() == "c", "str pop 1")
+    assert(ss.pop() == "b", "str pop 2")
+    assert(ss.size() == 1, "str size after 2 pops")
+    println("test_stack_str: PASS")

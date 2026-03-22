@@ -1,0 +1,4 @@
+test_bitset_basic: PASS
+test_bitset_clear: PASS
+test_bitset_clearall: PASS
+test_bitset_large: PASS

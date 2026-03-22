@@ -1,0 +1,8 @@
+test_merge_sort: PASS
+test_merge_sort_empty: PASS
+test_merge_sort_single: PASS
+test_merge_sort_sorted: PASS
+test_merge_sort_reverse: PASS
+test_merge_sort_duplicates: PASS
+test_insertion_sort: PASS
+test_merge_sort_large: PASS
