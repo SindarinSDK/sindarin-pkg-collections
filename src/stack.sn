@@ -4,6 +4,9 @@ struct Stack<T> =>
     items: T[]
     count: int
 
+    static fn new(): Stack<T> =>
+        return Stack<T> { items: {}, count: 0 }
+
     fn push(item: T): void =>
         self.items.push(item)
         self.count = self.count + 1

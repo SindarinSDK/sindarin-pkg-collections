@@ -2,7 +2,7 @@ import "../src/queue"
 
 fn main(): void =>
     # --- Basic FIFO operations ---
-    var q: Queue<int> = Queue<int> { items: {}, head: 0, count: 0 }
+    var q: Queue<int> = Queue<int>.new()
     assert(q.isEmpty(), "new queue should be empty")
     assert(q.size() == 0, "new queue size")
 
@@ -27,7 +27,7 @@ fn main(): void =>
     println("test_queue_basic: PASS")
 
     # --- Enqueue/dequeue interleaved ---
-    var q2: Queue<int> = Queue<int> { items: {}, head: 0, count: 0 }
+    var q2: Queue<int> = Queue<int>.new()
     for i in 0..20 =>
         q2.enqueue(i)
     for i in 0..15 =>
@@ -43,7 +43,7 @@ fn main(): void =>
     println("test_queue_interleaved: PASS")
 
     # --- Growth ---
-    var q3: Queue<int> = Queue<int> { items: {}, head: 0, count: 0 }
+    var q3: Queue<int> = Queue<int>.new()
     for i in 0..100 =>
         q3.enqueue(i)
     assert(q3.size() == 100, "size after 100 enqueues")
@@ -53,7 +53,7 @@ fn main(): void =>
     println("test_queue_growth: PASS")
 
     # --- Queue<str> ---
-    var qs: Queue<str> = Queue<str> { items: {}, head: 0, count: 0 }
+    var qs: Queue<str> = Queue<str>.new()
     qs.enqueue("alpha")
     qs.enqueue("beta")
     qs.enqueue("gamma")
@@ -64,7 +64,7 @@ fn main(): void =>
     println("test_queue_str: PASS")
 
     # --- Iteration ---
-    var qi: Queue<int> = Queue<int> { items: {}, head: 0, count: 0 }
+    var qi: Queue<int> = Queue<int>.new()
     qi.enqueue(1)
     qi.enqueue(2)
     qi.enqueue(3)

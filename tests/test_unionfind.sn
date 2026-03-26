@@ -1,7 +1,7 @@
 import "../src/unionfind"
 
 fn main(): void =>
-    var uf: UnionFind = newUnionFind(10)
+    var uf: UnionFind = UnionFind.new(10)
     assert(uf.componentCount() == 10, "initial components")
     assert(!uf.connected(0, 1), "0 and 1 not connected initially")
 
@@ -24,7 +24,7 @@ fn main(): void =>
     println("test_unionfind_idempotent: PASS")
 
     # Large union-find
-    var uf2: UnionFind = newUnionFind(1000)
+    var uf2: UnionFind = UnionFind.new(1000)
     for i in 0..999 =>
         uf2.union(i, i + 1)
     assert(uf2.componentCount() == 1, "all connected")

@@ -2,7 +2,7 @@ import "../src/list"
 
 fn main(): void =>
     # --- List<int> ---
-    var nums: List<int> = List<int> { items: {}, count: 0 }
+    var nums: List<int> = List<int>.new()
     assert(nums.isEmpty(), "new list should be empty")
     assert(nums.size() == 0, "new list size should be 0")
 
@@ -30,7 +30,7 @@ fn main(): void =>
     println("test_list_int: PASS")
 
     # --- List<int> iteration ---
-    var items: List<int> = List<int> { items: {}, count: 0 }
+    var items: List<int> = List<int>.new()
     items.push(1)
     items.push(2)
     items.push(3)
@@ -41,7 +41,7 @@ fn main(): void =>
     println("test_list_int_iter: PASS")
 
     # --- List<str> ---
-    var words: List<str> = List<str> { items: {}, count: 0 }
+    var words: List<str> = List<str>.new()
     words.push("hello")
     words.push("world")
     assert(words.size() == 2, "str list size")

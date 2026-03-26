@@ -3,7 +3,7 @@
 # Usage:
 #   import "sindarin-pkg-collections/src/list"
 #
-#   var nums: List<int> = List<int> { items: {}, count: 0 }
+#   var nums: List<int> = List<int>.new()
 #   nums.push(1)
 #   nums.push(2)
 #   for n in nums =>
@@ -24,6 +24,9 @@ struct ListIter<T> =>
 struct List<T> =>
     items: T[]
     count: int
+
+    static fn new(): List<T> =>
+        return List<T> { items: {}, count: 0 }
 
     fn push(item: T): void =>
         self.items.push(item)

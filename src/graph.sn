@@ -7,6 +7,13 @@ struct Graph =>
     adj: int[][]
     vertex_count: int
 
+    static fn new(n: int): Graph =>
+        var adj: int[][] = {}
+        for i in 0..n =>
+            var empty: int[] = {}
+            adj.push(empty)
+        return Graph { adj: adj, vertex_count: n }
+
     fn addEdge(from: int, to: int): void =>
         self.adj[from].push(to)
 
@@ -99,9 +106,3 @@ struct Graph =>
             return {}
         return result
 
-fn newGraph(n: int): Graph =>
-    var adj: int[][] = {}
-    for i in 0..n =>
-        var empty: int[] = {}
-        adj.push(empty)
-    return Graph { adj: adj, vertex_count: n }

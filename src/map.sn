@@ -31,6 +31,9 @@ struct HashMap<K: Hashable, V> =>
     values: V[]
     count: int
 
+    static fn new(): HashMap<K, V> =>
+        return HashMap<K, V> { keys: {}, values: {}, count: 0 }
+
     fn set(key: K, value: V): void =>
         for i in 0..self.count =>
             if self.keys[i].equals(key) =>

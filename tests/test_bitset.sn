@@ -1,7 +1,7 @@
 import "../src/bitset"
 
 fn main(): void =>
-    var bs: BitSet = newBitSet(128)
+    var bs: BitSet = BitSet.new(128)
     assert(!bs.get(0), "bit 0 initially clear")
     assert(!bs.get(62), "bit 62 initially clear")
     assert(bs.popcount() == 0, "initial popcount")
@@ -32,7 +32,7 @@ fn main(): void =>
     println("test_bitset_clearall: PASS")
 
     # Large bitset
-    var bs2: BitSet = newBitSet(1000)
+    var bs2: BitSet = BitSet.new(1000)
     for i in 0..500 =>
         bs2.set(i * 2)
     assert(bs2.popcount() == 500, "large popcount")

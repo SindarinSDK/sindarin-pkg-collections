@@ -6,6 +6,13 @@ struct BitSet =>
     words: int[]
     size: int
 
+    static fn new(n: int): BitSet =>
+        var num_words: int = (n + 62) / 63
+        var words: int[] = {}
+        for i in 0..num_words =>
+            words.push(0)
+        return BitSet { words: words, size: n }
+
     fn set(index: int): void =>
         var word: int = index / 63
         var bit: int = index % 63
@@ -34,9 +41,3 @@ struct BitSet =>
                 total = total + 1
         return total
 
-fn newBitSet(n: int): BitSet =>
-    var num_words: int = (n + 62) / 63
-    var words: int[] = {}
-    for i in 0..num_words =>
-        words.push(0)
-    return BitSet { words: words, size: n }

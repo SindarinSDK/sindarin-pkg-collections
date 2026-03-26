@@ -19,6 +19,9 @@ struct Queue<T> =>
     head: int
     count: int
 
+    static fn new(): Queue<T> =>
+        return Queue<T> { items: {}, head: 0, count: 0 }
+
     fn enqueue(item: T): void =>
         self.items.push(item)
         self.count = self.count + 1

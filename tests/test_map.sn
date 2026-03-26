@@ -11,7 +11,7 @@ struct IntKey =>
 
 fn main(): void =>
     # --- Basic set/get/has ---
-    var m: HashMap<IntKey, int> = HashMap<IntKey, int> { keys: {}, values: {}, count: 0 }
+    var m: HashMap<IntKey, int> = HashMap<IntKey, int>.new()
     assert(m.isEmpty(), "new map should be empty")
 
     m.set(IntKey { value: 1 }, 100)
@@ -36,7 +36,7 @@ fn main(): void =>
     println("test_map_overwrite: PASS")
 
     # --- Growth ---
-    var m2: HashMap<IntKey, int> = HashMap<IntKey, int> { keys: {}, values: {}, count: 0 }
+    var m2: HashMap<IntKey, int> = HashMap<IntKey, int>.new()
     for i in 0..100 =>
         m2.set(IntKey { value: i }, i * 10)
     assert(m2.size() == 100, "size after 100 sets")
@@ -46,7 +46,7 @@ fn main(): void =>
     println("test_map_growth: PASS")
 
     # --- Iteration ---
-    var m3: HashMap<IntKey, int> = HashMap<IntKey, int> { keys: {}, values: {}, count: 0 }
+    var m3: HashMap<IntKey, int> = HashMap<IntKey, int>.new()
     m3.set(IntKey { value: 10 }, 1)
     m3.set(IntKey { value: 20 }, 2)
     m3.set(IntKey { value: 30 }, 3)

@@ -11,7 +11,7 @@ struct IntKey =>
 
 fn main(): void =>
     # --- Basic set operations ---
-    var s: HashSet<IntKey> = HashSet<IntKey> { items: {}, count: 0 }
+    var s: HashSet<IntKey> = HashSet<IntKey>.new()
     assert(s.isEmpty(), "new set should be empty")
     assert(s.size() == 0, "new set size")
 
@@ -32,7 +32,7 @@ fn main(): void =>
     println("test_set_duplicate: PASS")
 
     # --- Growth ---
-    var s2: HashSet<IntKey> = HashSet<IntKey> { items: {}, count: 0 }
+    var s2: HashSet<IntKey> = HashSet<IntKey>.new()
     for i in 0..100 =>
         s2.add(IntKey { value: i })
     assert(s2.size() == 100, "size after 100 adds")

@@ -7,6 +7,14 @@ struct UnionFind =>
     rank: int[]
     count: int
 
+    static fn new(n: int): UnionFind =>
+        var p: int[] = {}
+        var r: int[] = {}
+        for i in 0..n =>
+            p.push(i)
+            r.push(0)
+        return UnionFind { parent: p, rank: r, count: n }
+
     fn find(x: int): int =>
         # Path compression: make every node point directly to root
         var root: int = x
@@ -41,10 +49,3 @@ struct UnionFind =>
     fn componentCount(): int =>
         return self.count
 
-fn newUnionFind(n: int): UnionFind =>
-    var p: int[] = {}
-    var r: int[] = {}
-    for i in 0..n =>
-        p.push(i)
-        r.push(0)
-    return UnionFind { parent: p, rank: r, count: n }

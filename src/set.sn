@@ -11,6 +11,9 @@ struct HashSet<T: Hashable> =>
     items: T[]
     count: int
 
+    static fn new(): HashSet<T> =>
+        return HashSet<T> { items: {}, count: 0 }
+
     fn add(item: T): void =>
         if !self.contains(item) =>
             self.items.push(item)

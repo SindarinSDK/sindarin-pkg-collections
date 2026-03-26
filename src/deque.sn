@@ -19,6 +19,9 @@ struct Deque<T> =>
     head: int
     count: int
 
+    static fn new(): Deque<T> =>
+        return Deque<T> { items: {}, head: 0, count: 0 }
+
     fn pushBack(item: T): void =>
         self.items.push(item)
         self.count = self.count + 1
