@@ -1,60 +1,60 @@
 import "../src/map"
 
 struct IntKey =>
-    value: int
+  value: int
 
-    fn hash(): int =>
-        return self.value * 2654435761
+  fn hash(): int =>
+    return self.value * 2654435761
 
-    fn equals(other: IntKey): bool =>
-        return self.value == other.value
+  fn equals(other: IntKey): bool =>
+    return self.value == other.value
 
 fn main(): void =>
-    # --- Basic set/get/has ---
-    var m: HashMap<IntKey, int> = HashMap<IntKey, int>.new()
-    assert(m.isEmpty(), "new map should be empty")
+  # --- Basic set/get/has ---
+  var m: HashMap < IntKey, int > = HashMap < IntKey, int >.new()
+  assert(m.isEmpty(), "new map should be empty")
 
-    m.set(IntKey { value: 1 }, 100)
-    m.set(IntKey { value: 2 }, 200)
-    m.set(IntKey { value: 3 }, 300)
-    assert(m.size() == 3, "size after 3 sets")
-    assert(!m.isEmpty(), "map not empty")
+  m.set(IntKey { value: 1 }, 100)
+  m.set(IntKey { value: 2 }, 200)
+  m.set(IntKey { value: 3 }, 300)
+  assert(m.size() == 3, "size after 3 sets")
+  assert(!m.isEmpty(), "map not empty")
 
-    assert(m.has(IntKey { value: 1 }), "has key 1")
-    assert(m.has(IntKey { value: 2 }), "has key 2")
-    assert(!m.has(IntKey { value: 99 }), "!has key 99")
+  assert(m.has(IntKey { value: 1 }), "has key 1")
+  assert(m.has(IntKey { value: 2 }), "has key 2")
+  assert(!m.has(IntKey { value: 99 }), "!has key 99")
 
-    assert(m.get(IntKey { value: 1 }) == 100, "get key 1")
-    assert(m.get(IntKey { value: 2 }) == 200, "get key 2")
-    assert(m.get(IntKey { value: 3 }) == 300, "get key 3")
-    println("test_map_basic: PASS")
+  assert(m.get(IntKey { value: 1 }) == 100, "get key 1")
+  assert(m.get(IntKey { value: 2 }) == 200, "get key 2")
+  assert(m.get(IntKey { value: 3 }) == 300, "get key 3")
+  println("test_map_basic: PASS")
 
-    # --- Overwrite ---
-    m.set(IntKey { value: 2 }, 999)
-    assert(m.get(IntKey { value: 2 }) == 999, "overwrite value")
-    assert(m.size() == 3, "size unchanged after overwrite")
-    println("test_map_overwrite: PASS")
+  # --- Overwrite ---
+  m.set(IntKey { value: 2 }, 999)
+  assert(m.get(IntKey { value: 2 }) == 999, "overwrite value")
+  assert(m.size() == 3, "size unchanged after overwrite")
+  println("test_map_overwrite: PASS")
 
-    # --- Growth ---
-    var m2: HashMap<IntKey, int> = HashMap<IntKey, int>.new()
-    for i in 0..100 =>
-        m2.set(IntKey { value: i }, i * 10)
-    assert(m2.size() == 100, "size after 100 sets")
-    for i in 0..100 =>
-        assert(m2.has(IntKey { value: i }), "has after growth")
-        assert(m2.get(IntKey { value: i }) == i * 10, "get after growth")
-    println("test_map_growth: PASS")
+  # --- Growth ---
+  var m2: HashMap < IntKey, int > = HashMap < IntKey, int >.new()
+  for i in 0..100 =>
+    m2.set(IntKey { value: i }, i * 10)
+  assert(m2.size() == 100, "size after 100 sets")
+  for i in 0..100 =>
+    assert(m2.has(IntKey { value: i }), "has after growth")
+    assert(m2.get(IntKey { value: i }) == i * 10, "get after growth")
+  println("test_map_growth: PASS")
 
-    # --- Iteration ---
-    var m3: HashMap<IntKey, int> = HashMap<IntKey, int>.new()
-    m3.set(IntKey { value: 10 }, 1)
-    m3.set(IntKey { value: 20 }, 2)
-    m3.set(IntKey { value: 30 }, 3)
-    var ksum: int = 0
-    var vsum: int = 0
-    for entry in m3 =>
-        ksum = ksum + entry.key.value
-        vsum = vsum + entry.value
-    assert(ksum == 60, "iter key sum")
-    assert(vsum == 6, "iter value sum")
-    println("test_map_iter: PASS")
+  # --- Iteration ---
+  var m3: HashMap < IntKey, int > = HashMap < IntKey, int >.new()
+  m3.set(IntKey { value: 10 }, 1)
+  m3.set(IntKey { value: 20 }, 2)
+  m3.set(IntKey { value: 30 }, 3)
+  var ksum: int = 0
+  var vsum: int = 0
+  for entry in m3 =>
+    ksum = ksum + entry.key.value
+    vsum = vsum + entry.value
+  assert(ksum == 60, "iter key sum")
+  assert(vsum == 6, "iter value sum")
+  println("test_map_iter: PASS")

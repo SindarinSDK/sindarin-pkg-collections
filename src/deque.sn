@@ -1,69 +1,69 @@
 # Deque<T> — Double-ended queue backed by a dynamic array with head pointer
 
-struct DequeIter<T> =>
-    items: T[]
-    head: int
-    remaining: int
+struct DequeIter < T > =>
+  items: T[]
+  head: int
+  remaining: int
 
-    fn hasNext(): bool =>
-        return self.remaining > 0
+  fn hasNext(): bool =>
+    return self.remaining > 0
 
-    fn next(): T =>
-        var v: T = self.items[self.head]
-        self.head = self.head + 1
-        self.remaining = self.remaining - 1
-        return v
+  fn next(): T =>
+    var v: T = self.items[self.head]
+    self.head = self.head + 1
+    self.remaining = self.remaining - 1
+    return v
 
-struct Deque<T> =>
-    items: T[]
-    head: int
-    count: int
+struct Deque < T > =>
+  items: T[]
+  head: int
+  count: int
 
-    static fn new(): Deque<T> =>
-        return Deque<T> { items: {}, head: 0, count: 0 }
+  static fn new(): Deque < T > =>
+    return Deque < T > {items: {}, head: 0, count: 0}
 
-    fn pushBack(item: T): void =>
-        self.items.push(item)
-        self.count = self.count + 1
+  fn pushBack(item: T): void =>
+    self.items.push(item)
+    self.count = self.count + 1
 
-    fn pushFront(item: T): void =>
-        # Shift everything right and insert at head
-        self.items.push(self.items[0])
-        var i: int = len(self.items) - 1
-        while i > self.head =>
-            self.items[i] = self.items[i - 1]
-            i = i - 1
-        self.items[self.head] = item
-        self.count = self.count + 1
+  fn pushFront(item: T): void =>
+    # Shift everything right and insert at head
+    self.items.push(self.items[0])
+    var i: int = len(self.items) - 1
+    while i > self.head =>
+      self.items[i] = self.items[i - 1]
+      i = i - 1
+    self.items[self.head] = item
+    self.count = self.count + 1
 
-    fn popBack(): T =>
-        self.count = self.count - 1
-        return self.items.pop()
+  fn popBack(): T =>
+    self.count = self.count - 1
+    return self.items.pop()
 
-    fn popFront(): T =>
-        var v: T = self.items[self.head]
-        self.head = self.head + 1
-        self.count = self.count - 1
-        # Compact when wasted space exceeds active elements
-        if self.head > self.count && self.count > 0 =>
-            var new_items: T[] = {}
-            for i in 0..self.count =>
-                new_items.push(self.items[self.head + i])
-            self.items = new_items
-            self.head = 0
-        return v
+  fn popFront(): T =>
+    var v: T = self.items[self.head]
+    self.head = self.head + 1
+    self.count = self.count - 1
+    # Compact when wasted space exceeds active elements
+    if self.head > self.count && self.count > 0 =>
+      var new_items: T[] = {}
+      for i in 0..self.count =>
+        new_items.push(self.items[self.head + i])
+      self.items = new_items
+      self.head = 0
+    return v
 
-    fn peekFront(): T =>
-        return self.items[self.head]
+  fn peekFront(): T =>
+    return self.items[self.head]
 
-    fn peekBack(): T =>
-        return self.items[self.head + self.count - 1]
+  fn peekBack(): T =>
+    return self.items[self.head + self.count - 1]
 
-    fn size(): int =>
-        return self.count
+  fn size(): int =>
+    return self.count
 
-    fn isEmpty(): bool =>
-        return self.count == 0
+  fn isEmpty(): bool =>
+    return self.count == 0
 
-    fn iter(): DequeIter<T> =>
-        return DequeIter<T> { items: self.items, head: self.head, remaining: self.count }
+  fn iter(): DequeIter < T > =>
+    return DequeIter < T > {items: self.items, head: self.head, remaining: self.count}

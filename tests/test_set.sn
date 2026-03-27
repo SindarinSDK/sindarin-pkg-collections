@@ -1,42 +1,42 @@
 import "../src/set"
 
 struct IntKey =>
-    value: int
+  value: int
 
-    fn hash(): int =>
-        return self.value * 2654435761
+  fn hash(): int =>
+    return self.value * 2654435761
 
-    fn equals(other: IntKey): bool =>
-        return self.value == other.value
+  fn equals(other: IntKey): bool =>
+    return self.value == other.value
 
 fn main(): void =>
-    # --- Basic set operations ---
-    var s: HashSet<IntKey> = HashSet<IntKey>.new()
-    assert(s.isEmpty(), "new set should be empty")
-    assert(s.size() == 0, "new set size")
+  # --- Basic set operations ---
+  var s: HashSet < IntKey > = HashSet < IntKey >.new()
+  assert(s.isEmpty(), "new set should be empty")
+  assert(s.size() == 0, "new set size")
 
-    s.add(IntKey { value: 1 })
-    s.add(IntKey { value: 2 })
-    s.add(IntKey { value: 3 })
-    assert(s.size() == 3, "size after 3 adds")
+  s.add(IntKey { value: 1 })
+  s.add(IntKey { value: 2 })
+  s.add(IntKey { value: 3 })
+  assert(s.size() == 3, "size after 3 adds")
 
-    assert(s.contains(IntKey { value: 1 }), "contains 1")
-    assert(s.contains(IntKey { value: 2 }), "contains 2")
-    assert(s.contains(IntKey { value: 3 }), "contains 3")
-    assert(!s.contains(IntKey { value: 4 }), "!contains 4")
-    println("test_set_basic: PASS")
+  assert(s.contains(IntKey { value: 1 }), "contains 1")
+  assert(s.contains(IntKey { value: 2 }), "contains 2")
+  assert(s.contains(IntKey { value: 3 }), "contains 3")
+  assert(!s.contains(IntKey { value: 4 }), "!contains 4")
+  println("test_set_basic: PASS")
 
-    # --- Duplicate add (no-op) ---
-    s.add(IntKey { value: 2 })
-    assert(s.size() == 3, "duplicate add should not increase size")
-    println("test_set_duplicate: PASS")
+  # --- Duplicate add (no-op) ---
+  s.add(IntKey { value: 2 })
+  assert(s.size() == 3, "duplicate add should not increase size")
+  println("test_set_duplicate: PASS")
 
-    # --- Growth ---
-    var s2: HashSet<IntKey> = HashSet<IntKey>.new()
-    for i in 0..100 =>
-        s2.add(IntKey { value: i })
-    assert(s2.size() == 100, "size after 100 adds")
-    for i in 0..100 =>
-        assert(s2.contains(IntKey { value: i }), "contains after growth")
-    assert(!s2.contains(IntKey { value: 100 }), "!contains 100")
-    println("test_set_growth: PASS")
+  # --- Growth ---
+  var s2: HashSet < IntKey > = HashSet < IntKey >.new()
+  for i in 0..100 =>
+    s2.add(IntKey { value: i })
+  assert(s2.size() == 100, "size after 100 adds")
+  for i in 0..100 =>
+    assert(s2.contains(IntKey { value: i }), "contains after growth")
+  assert(!s2.contains(IntKey { value: 100 }), "!contains 100")
+  println("test_set_growth: PASS")

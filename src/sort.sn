@@ -3,65 +3,65 @@
 # Elements must satisfy the Comparable interface (compare(other: Self): int).
 
 interface Comparable =>
-    fn compare(other: Self): int
+  fn compare(other: Self): int
 
 # Merge sort — stable, O(n log n)
-fn mergeSort<T: Comparable>(arr: T[]): T[] =>
-    var n: int = len(arr)
-    if n <= 1 =>
-        var copy: T[] = {}
-        for i in 0..n =>
-            copy.push(arr[i])
-        return copy
+fn mergeSort < T: Comparable > (arr: T[]): T[] =>
+  var n: int = len(arr)
+  if n <= 1 =>
+    var copy: T[] = {}
+    for i in 0..n =>
+      copy.push(arr[i])
+    return copy
 
-    var mid: int = n / 2
-    var left_in: T[] = {}
-    var right_in: T[] = {}
+  var mid: int = n / 2
+  var left_in: T[] = {}
+  var right_in: T[] = {}
 
-    for i in 0..mid =>
-        left_in.push(arr[i])
-    for i in mid..n =>
-        right_in.push(arr[i])
+  for i in 0..mid =>
+    left_in.push(arr[i])
+  for i in mid..n =>
+    right_in.push(arr[i])
 
-    var left_sorted: T[] = mergeSort(left_in)
-    var right_sorted: T[] = mergeSort(right_in)
-    return _merge(left_sorted, right_sorted)
+  var left_sorted: T[] = mergeSort(left_in)
+  var right_sorted: T[] = mergeSort(right_in)
+  return _merge(left_sorted, right_sorted)
 
-fn _merge<T: Comparable>(left: T[], right: T[]): T[] =>
-    var result: T[] = {}
-    var i: int = 0
-    var j: int = 0
+fn _merge < T: Comparable > (left: T[], right: T[]): T[] =>
+  var result: T[] = {}
+  var i: int = 0
+  var j: int = 0
 
-    while i < len(left) && j < len(right) =>
-        if left[i].compare(right[j]) <= 0 =>
-            result.push(left[i])
-            i = i + 1
-        else =>
-            result.push(right[j])
-            j = j + 1
+  while i < len(left) && j < len(right) =>
+    if left[i].compare(right[j]) <= 0 =>
+      result.push(left[i])
+      i = i + 1
+    else =>
+      result.push(right[j])
+      j = j + 1
 
-    while i < len(left) =>
-        result.push(left[i])
-        i = i + 1
+  while i < len(left) =>
+    result.push(left[i])
+    i = i + 1
 
-    while j < len(right) =>
-        result.push(right[j])
-        j = j + 1
+  while j < len(right) =>
+    result.push(right[j])
+    j = j + 1
 
-    return result
+  return result
 
 # Insertion sort — stable, O(n^2), fast for small/nearly-sorted arrays
-fn insertionSort<T: Comparable>(arr: T[]): T[] =>
-    var result: T[] = {}
-    for i in 0..len(arr) =>
-        result.push(arr[i])
+fn insertionSort < T: Comparable > (arr: T[]): T[] =>
+  var result: T[] = {}
+  for i in 0..len(arr) =>
+    result.push(arr[i])
 
-    for i in 1..len(result) =>
-        var j: int = i
-        while j > 0 && result[j].compare(result[j - 1]) < 0 =>
-            var tmp: T = result[j]
-            result[j] = result[j - 1]
-            result[j - 1] = tmp
-            j = j - 1
+  for i in 1..len(result) =>
+    var j: int = i
+    while j > 0 && result[j].compare(result[j - 1]) < 0 =>
+      var tmp: T = result[j]
+      result[j] = result[j - 1]
+      result[j - 1] = tmp
+      j = j - 1
 
-    return result
+  return result

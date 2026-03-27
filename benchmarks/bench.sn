@@ -11,119 +11,119 @@ import "../src/graph"
 import "../src/sort"
 
 struct IntKey =>
-    value: int
+  value: int
 
-    fn hash(): int =>
-        return self.value * 2654435761
+  fn hash(): int =>
+    return self.value * 2654435761
 
-    fn equals(other: IntKey): bool =>
-        return self.value == other.value
+  fn equals(other: IntKey): bool =>
+    return self.value == other.value
 
 struct Score =>
-    value: int
+  value: int
 
-    fn compare(other: Score): int =>
-        if self.value < other.value => return -1
-        if self.value > other.value => return 1
-        return 0
+  fn compare(other: Score): int =>
+    if self.value < other.value => return - 1
+    if self.value > other.value => return 1
+    return 0
 
 fn main(): void =>
-    var n: int = 100000
-    var n_hash: int = 5000
+  var n: int = 100000
+  var n_hash: int = 5000
 
-    print("Collections Benchmark\n")
-    print("=========================================\n\n")
+  print("Collections Benchmark\n")
+  print("=========================================\n\n")
 
-    # List<int>: 100k push + get + set + pop
-    var l: List<int> = List<int>.new()
-    for i in 0..n =>
-        l.push(i)
-    for i in 0..n =>
-        l.get(i)
-    for i in 0..n =>
-        l.set(i, i * 2)
-    while !l.isEmpty() =>
-        l.pop()
-    print("  List<int>:    100k push + 100k get + 100k set + 100k pop\n")
+  # List<int>: 100k push + get + set + pop
+  var l: List < int > = List < int >.new()
+  for i in 0..n =>
+    l.push(i)
+  for i in 0..n =>
+    l.get(i)
+  for i in 0..n =>
+    l.set(i, i * 2)
+  while !l.isEmpty() =>
+    l.pop()
+  print("  List<int>:    100k push + 100k get + 100k set + 100k pop\n")
 
-    # Stack<int>: 100k push + pop
-    var s: Stack<int> = Stack<int>.new()
-    for i in 0..n =>
-        s.push(i)
-    while !s.isEmpty() =>
-        s.pop()
-    print("  Stack<int>:   100k push + 100k pop\n")
+  # Stack<int>: 100k push + pop
+  var s: Stack < int > = Stack < int >.new()
+  for i in 0..n =>
+    s.push(i)
+  while !s.isEmpty() =>
+    s.pop()
+  print("  Stack<int>:   100k push + 100k pop\n")
 
-    # Queue<int>: 100k enqueue + dequeue
-    var q: Queue<int> = Queue<int>.new()
-    for i in 0..n =>
-        q.enqueue(i)
-    while !q.isEmpty() =>
-        q.dequeue()
-    print("  Queue<int>:   100k enqueue + 100k dequeue\n")
+  # Queue<int>: 100k enqueue + dequeue
+  var q: Queue < int > = Queue < int >.new()
+  for i in 0..n =>
+    q.enqueue(i)
+  while !q.isEmpty() =>
+    q.dequeue()
+  print("  Queue<int>:   100k enqueue + 100k dequeue\n")
 
-    # Deque<int>: 100k pushBack + popFront
-    var d: Deque<int> = Deque<int>.new()
-    for i in 0..n =>
-        d.pushBack(i)
-    while !d.isEmpty() =>
-        d.popFront()
-    print("  Deque<int>:   100k pushBack + 100k popFront\n")
+  # Deque<int>: 100k pushBack + popFront
+  var d: Deque < int > = Deque < int >.new()
+  for i in 0..n =>
+    d.pushBack(i)
+  while !d.isEmpty() =>
+    d.popFront()
+  print("  Deque<int>:   100k pushBack + 100k popFront\n")
 
-    # MinHeap<Score>: 100k push + pop (reverse order)
-    var h: MinHeap<Score> = MinHeap<Score>.new()
-    for i in 0..n =>
-        h.push(Score { value: n - i })
-    while !h.isEmpty() =>
-        h.pop()
-    print("  MinHeap:      100k push + 100k pop (reverse input)\n")
+  # MinHeap<Score>: 100k push + pop (reverse order)
+  var h: MinHeap < Score > = MinHeap < Score >.new()
+  for i in 0..n =>
+    h.push(Score { value: n - i })
+  while !h.isEmpty() =>
+    h.pop()
+  print("  MinHeap:      100k push + 100k pop (reverse input)\n")
 
-    # HashSet<IntKey>: 5k add + contains (O(n) scan)
-    var hs: HashSet<IntKey> = HashSet<IntKey>.new()
-    for i in 0..n_hash =>
-        hs.add(IntKey { value: i })
-    for i in 0..n_hash =>
-        hs.contains(IntKey { value: i })
-    print("  HashSet:      5k add + 5k contains\n")
+  # HashSet<IntKey>: 5k add + contains (O(n) scan)
+  var hs: HashSet < IntKey > = HashSet < IntKey >.new()
+  for i in 0..n_hash =>
+    hs.add(IntKey { value: i })
+  for i in 0..n_hash =>
+    hs.contains(IntKey { value: i })
+  print("  HashSet:      5k add + 5k contains\n")
 
-    # HashMap<IntKey, int>: 5k set + has + get (O(n) scan)
-    var hm: HashMap<IntKey, int> = HashMap<IntKey, int>.new()
-    for i in 0..n_hash =>
-        hm.set(IntKey { value: i }, i * 10)
-    for i in 0..n_hash =>
-        hm.has(IntKey { value: i })
-        hm.get(IntKey { value: i })
-    print("  HashMap:      5k set + 5k has/get\n")
+  # HashMap<IntKey, int>: 5k set + has + get (O(n) scan)
+  var hm: HashMap < IntKey, int > = HashMap < IntKey, int >.new()
+  for i in 0..n_hash =>
+    hm.set(IntKey { value: i }, i * 10)
+  for i in 0..n_hash =>
+    hm.has(IntKey { value: i })
+    hm.get(IntKey { value: i })
+  print("  HashMap:      5k set + 5k has/get\n")
 
-    # UnionFind: 100k union + connected
-    var uf: UnionFind = UnionFind.new(n)
-    for i in 0..n - 1 =>
-        uf.union(i, i + 1)
-    for i in 0..n =>
-        uf.connected(0, i)
-    print("  UnionFind:    100k union + 100k connected\n")
+  # UnionFind: 100k union + connected
+  var uf: UnionFind = UnionFind.new(n)
+  for i in 0..n - 1 =>
+    uf.union(i, i + 1)
+  for i in 0..n =>
+    uf.connected(0, i)
+  print("  UnionFind:    100k union + 100k connected\n")
 
-    # BitSet: 100k set + popcount + clearAll
-    var bs: BitSet = BitSet.new(n)
-    for i in 0..n =>
-        bs.set(i)
-    bs.popcount()
-    bs.clearAll()
-    print("  BitSet:       100k set + popcount + clearAll\n")
+  # BitSet: 100k set + popcount + clearAll
+  var bs: BitSet = BitSet.new(n)
+  for i in 0..n =>
+    bs.set(i)
+  bs.popcount()
+  bs.clearAll()
+  print("  BitSet:       100k set + popcount + clearAll\n")
 
-    # Graph: 100k vertices + BFS + topo sort
-    var g: Graph = Graph.new(n)
-    for i in 0..n - 1 =>
-        g.addEdge(i, i + 1)
-    g.bfs(0)
-    g.topologicalSort()
-    print("  Graph:        100k vertices + BFS + topo sort\n")
+  # Graph: 100k vertices + BFS + topo sort
+  var g: Graph = Graph.new(n)
+  for i in 0..n - 1 =>
+    g.addEdge(i, i + 1)
+  g.bfs(0)
+  g.topologicalSort()
+  print("  Graph:        100k vertices + BFS + topo sort\n")
 
-    # mergeSort: 100k elements
-    var arr: Score[] = {}
-    for i in 0..n =>
-        arr.push(Score { value: n - i })
-    mergeSort(arr)
-    print("  mergeSort:    100k elements (reverse input)\n")
+  # mergeSort: 100k elements
+  var arr: Score[] = {}
+  for i in 0..n =>
+    arr.push(Score { value: n - i })
+  mergeSort(arr)
+  print("  mergeSort:    100k elements (reverse input)\n")
 
-    print("\nDone.\n")
+  print("\nDone.\n")

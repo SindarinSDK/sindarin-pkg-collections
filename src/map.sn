@@ -4,62 +4,62 @@
 # Uses linear scan for lookups. Simple and correct.
 
 interface Hashable =>
-    fn hash(): int
-    fn equals(other: Self): bool
+  fn hash(): int
+  fn equals(other: Self): bool
 
-struct Entry<K, V> =>
-    key: K
-    value: V
+struct Entry < K, V > =>
+  key: K
+  value: V
 
-struct HashMapIter<K, V> =>
-    keys: K[]
-    values: V[]
-    index: int
-    count: int
+struct HashMapIter < K, V > =>
+  keys: K[]
+  values: V[]
+  index: int
+  count: int
 
-    fn hasNext(): bool =>
-        return self.index < self.count
+  fn hasNext(): bool =>
+    return self.index < self.count
 
-    fn next(): Entry<K, V> =>
-        var k: K = self.keys[self.index]
-        var v: V = self.values[self.index]
-        self.index = self.index + 1
-        return Entry<K, V> { key: k, value: v }
+  fn next(): Entry < K, V > =>
+    var k: K = self.keys[self.index]
+    var v: V = self.values[self.index]
+    self.index = self.index + 1
+    return Entry < K, V > {key: k, value: v}
 
-struct HashMap<K: Hashable, V> =>
-    keys: K[]
-    values: V[]
-    count: int
+struct HashMap < K: Hashable, V > =>
+  keys: K[]
+  values: V[]
+  count: int
 
-    static fn new(): HashMap<K, V> =>
-        return HashMap<K, V> { keys: {}, values: {}, count: 0 }
+  static fn new(): HashMap < K, V > =>
+    return HashMap < K, V > {keys: {}, values: {}, count: 0}
 
-    fn set(key: K, value: V): void =>
-        for i in 0..self.count =>
-            if self.keys[i].equals(key) =>
-                self.values[i] = value
-                return
-        self.keys.push(key)
-        self.values.push(value)
-        self.count = self.count + 1
+  fn set(key: K, value: V): void =>
+    for i in 0..self.count =>
+      if self.keys[i].equals(key) =>
+        self.values[i] = value
+        return
+    self.keys.push(key)
+    self.values.push(value)
+    self.count = self.count + 1
 
-    fn get(key: K): V =>
-        for i in 0..self.count =>
-            if self.keys[i].equals(key) =>
-                return self.values[i]
-        return self.values[0]
+  fn get(key: K): V =>
+    for i in 0..self.count =>
+      if self.keys[i].equals(key) =>
+        return self.values[i]
+    return self.values[0]
 
-    fn has(key: K): bool =>
-        for i in 0..self.count =>
-            if self.keys[i].equals(key) =>
-                return true
-        return false
+  fn has(key: K): bool =>
+    for i in 0..self.count =>
+      if self.keys[i].equals(key) =>
+        return true
+    return false
 
-    fn size(): int =>
-        return self.count
+  fn size(): int =>
+    return self.count
 
-    fn isEmpty(): bool =>
-        return self.count == 0
+  fn isEmpty(): bool =>
+    return self.count == 0
 
-    fn iter(): HashMapIter<K, V> =>
-        return HashMapIter<K, V> { keys: self.keys, values: self.values, index: 0, count: self.count }
+  fn iter(): HashMapIter < K, V > =>
+    return HashMapIter < K, V > {keys: self.keys, values: self.values, index: 0, count: self.count}

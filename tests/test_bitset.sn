@@ -1,43 +1,43 @@
 import "../src/bitset"
 
 fn main(): void =>
-    var bs: BitSet = BitSet.new(128)
-    assert(!bs.get(0), "bit 0 initially clear")
-    assert(!bs.get(62), "bit 62 initially clear")
-    assert(bs.popcount() == 0, "initial popcount")
+  var bs: BitSet = BitSet.new(128)
+  assert(!bs.get(0), "bit 0 initially clear")
+  assert(!bs.get(62), "bit 62 initially clear")
+  assert(bs.popcount() == 0, "initial popcount")
 
-    bs.set(0)
-    bs.set(42)
-    bs.set(62)
-    bs.set(100)
-    assert(bs.get(0), "bit 0 set")
-    assert(bs.get(42), "bit 42 set")
-    assert(bs.get(62), "bit 62 set")
-    assert(bs.get(100), "bit 100 set")
-    assert(!bs.get(1), "bit 1 not set")
-    assert(!bs.get(50), "bit 50 not set")
-    assert(bs.popcount() == 4, "popcount after 4 sets")
-    println("test_bitset_basic: PASS")
+  bs.set(0)
+  bs.set(42)
+  bs.set(62)
+  bs.set(100)
+  assert(bs.get(0), "bit 0 set")
+  assert(bs.get(42), "bit 42 set")
+  assert(bs.get(62), "bit 62 set")
+  assert(bs.get(100), "bit 100 set")
+  assert(!bs.get(1), "bit 1 not set")
+  assert(!bs.get(50), "bit 50 not set")
+  assert(bs.popcount() == 4, "popcount after 4 sets")
+  println("test_bitset_basic: PASS")
 
-    # Clear
-    bs.clear(42)
-    assert(!bs.get(42), "bit 42 cleared")
-    assert(bs.popcount() == 3, "popcount after clear")
-    println("test_bitset_clear: PASS")
+  # Clear
+  bs.clear(42)
+  assert(!bs.get(42), "bit 42 cleared")
+  assert(bs.popcount() == 3, "popcount after clear")
+  println("test_bitset_clear: PASS")
 
-    # Clear all
-    bs.clearAll()
-    assert(!bs.get(0), "clearAll bit 0")
-    assert(bs.popcount() == 0, "popcount after clearAll")
-    println("test_bitset_clearall: PASS")
+  # Clear all
+  bs.clearAll()
+  assert(!bs.get(0), "clearAll bit 0")
+  assert(bs.popcount() == 0, "popcount after clearAll")
+  println("test_bitset_clearall: PASS")
 
-    # Large bitset
-    var bs2: BitSet = BitSet.new(1000)
-    for i in 0..500 =>
-        bs2.set(i * 2)
-    assert(bs2.popcount() == 500, "large popcount")
-    assert(bs2.get(0), "large even bit set")
-    assert(!bs2.get(1), "large odd bit not set")
-    assert(bs2.get(998), "large bit 998 set")
-    assert(!bs2.get(999), "large bit 999 not set")
-    println("test_bitset_large: PASS")
+  # Large bitset
+  var bs2: BitSet = BitSet.new(1000)
+  for i in 0..500 =>
+    bs2.set(i * 2)
+  assert(bs2.popcount() == 500, "large popcount")
+  assert(bs2.get(0), "large even bit set")
+  assert(!bs2.get(1), "large odd bit not set")
+  assert(bs2.get(998), "large bit 998 set")
+  assert(!bs2.get(999), "large bit 999 not set")
+  println("test_bitset_large: PASS")

@@ -4,66 +4,65 @@
 # The smallest element is always at the top.
 
 interface Comparable =>
-    fn compare(other: Self): int
+  fn compare(other: Self): int
 
-struct MinHeap<T: Comparable> =>
-    items: T[]
-    count: int
+struct MinHeap < T: Comparable > =>
+  items: T[]
+  count: int
 
-    static fn new(): MinHeap<T> =>
-        return MinHeap<T> { items: {}, count: 0 }
+  static fn new(): MinHeap < T > =>
+    return MinHeap < T > {items: {}, count: 0}
 
-    fn push(item: T): void =>
-        self.items.push(item)
-        self.count = self.count + 1
-        self._siftUp(self.count - 1)
+  fn push(item: T): void =>
+    self.items.push(item)
+    self.count = self.count + 1
+    self._siftUp(self.count - 1)
 
-    fn pop(): T =>
-        var top: T = self.items[0]
-        self.count = self.count - 1
-        if self.count > 0 =>
-            self.items[0] = self.items[self.count]
-            self.items.pop()
-            self._siftDown(0)
-        else =>
-            self.items.pop()
-        return top
+  fn pop(): T =>
+    var top: T = self.items[0]
+    self.count = self.count - 1
+    if self.count > 0 =>
+      self.items[0] = self.items[self.count]
+      self.items.pop()
+      self._siftDown(0)
+    else =>
+      self.items.pop()
+    return top
 
-    fn peek(): T =>
-        return self.items[0]
+  fn peek(): T =>
+    return self.items[0]
 
-    fn size(): int =>
-        return self.count
+  fn size(): int =>
+    return self.count
 
-    fn isEmpty(): bool =>
-        return self.count == 0
+  fn isEmpty(): bool =>
+    return self.count == 0
 
-    fn _siftUp(idx: int): void =>
-        while idx > 0 =>
-            var parent: int = (idx - 1) / 2
-            if self.items[idx].compare(self.items[parent]) < 0 =>
-                var tmp: T = self.items[idx]
-                self.items[idx] = self.items[parent]
-                self.items[parent] = tmp
-                idx = parent
-            else =>
-                break
+  fn _siftUp(idx: int): void =>
+    while idx > 0 =>
+      var parent: int = (idx - 1) / 2
+      if self.items[idx].compare(self.items[parent]) < 0 =>
+        var tmp: T = self.items[idx]
+        self.items[idx] = self.items[parent]
+        self.items[parent] = tmp
+        idx = parent
+      else =>
+        break
 
-    fn _siftDown(idx: int): void =>
-        while true =>
-            var smallest: int = idx
-            var left: int = 2 * idx + 1
-            var right: int = 2 * idx + 2
-            if left < self.count =>
-                if self.items[left].compare(self.items[smallest]) < 0 =>
-                    smallest = left
-            if right < self.count =>
-                if self.items[right].compare(self.items[smallest]) < 0 =>
-                    smallest = right
-            if smallest == idx =>
-                break
-            var tmp: T = self.items[idx]
-            self.items[idx] = self.items[smallest]
-            self.items[smallest] = tmp
-            idx = smallest
-
+  fn _siftDown(idx: int): void =>
+    while true =>
+      var smallest: int = idx
+      var left: int = 2 * idx + 1
+      var right: int = 2 * idx + 2
+      if left < self.count =>
+        if self.items[left].compare(self.items[smallest]) < 0 =>
+          smallest = left
+      if right < self.count =>
+        if self.items[right].compare(self.items[smallest]) < 0 =>
+          smallest = right
+      if smallest == idx =>
+        break
+      var tmp: T = self.items[idx]
+      self.items[idx] = self.items[smallest]
+      self.items[smallest] = tmp
+      idx = smallest

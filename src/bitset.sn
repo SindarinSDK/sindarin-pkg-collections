@@ -3,41 +3,43 @@
 # Uses an int[] where each int stores 63 bits (avoids sign bit overflow).
 
 struct BitSet =>
-    words: int[]
-    size: int
+  words: int[]
+  size: int
 
-    static fn new(n: int): BitSet =>
-        var num_words: int = (n + 62) / 63
-        var words: int[] = {}
-        for i in 0..num_words =>
-            words.push(0)
-        return BitSet { words: words, size: n }
+  static fn new(n: int): BitSet =>
+    var num_words: int = (n + 62) / 63
+    var words: int[] = {}
+    for i in 0..num_words =>
+      words.push(0)
+    return BitSet {
+      words: words,
+      size: n
+    }
 
-    fn set(index: int): void =>
-        var word: int = index / 63
-        var bit: int = index % 63
-        self.words[word] = self.words[word] | (1 << bit)
+  fn set(index: int): void =>
+    var word: int = index / 63
+    var bit: int = index % 63
+    self.words[word] = self.words[word] | (1 << bit)
 
-    fn clear(index: int): void =>
-        var word: int = index / 63
-        var bit: int = index % 63
-        self.words[word] = self.words[word] & ~(1 << bit)
+  fn clear(index: int): void =>
+    var word: int = index / 63
+    var bit: int = index % 63
+    self.words[word] = self.words[word] & ~(1 << bit)
 
-    fn get(index: int): bool =>
-        var word: int = index / 63
-        var bit: int = index % 63
-        return (self.words[word] & (1 << bit)) != 0
+  fn get(index: int): bool =>
+    var word: int = index / 63
+    var bit: int = index % 63
+    return (self.words[word] & (1 << bit)) != 0
 
-    fn clearAll(): void =>
-        for i in 0..len(self.words) =>
-            self.words[i] = 0
+  fn clearAll(): void =>
+    for i in 0..len(self.words) =>
+      self.words[i] = 0
 
-    fn popcount(): int =>
-        var total: int = 0
-        for i in 0..len(self.words) =>
-            var w: int = self.words[i]
-            while w != 0 =>
-                w = w & (w - 1)
-                total = total + 1
-        return total
-
+  fn popcount(): int =>
+    var total: int = 0
+    for i in 0..len(self.words) =>
+      var w: int = self.words[i]
+      while w != 0 =>
+        w = w & (w - 1)
+        total = total + 1
+    return total

@@ -3,49 +3,52 @@
 # Elements are identified by integer indices 0..n-1.
 
 struct UnionFind =>
-    parent: int[]
-    rank: int[]
-    count: int
+  parent: int[]
+  rank: int[]
+  count: int
 
-    static fn new(n: int): UnionFind =>
-        var p: int[] = {}
-        var r: int[] = {}
-        for i in 0..n =>
-            p.push(i)
-            r.push(0)
-        return UnionFind { parent: p, rank: r, count: n }
+  static fn new(n: int): UnionFind =>
+    var p: int[] = {}
+    var r: int[] = {}
+    for i in 0..n =>
+      p.push(i)
+      r.push(0)
+    return UnionFind {
+      parent: p,
+      rank: r,
+      count: n
+    }
 
-    fn find(x: int): int =>
-        # Path compression: make every node point directly to root
-        var root: int = x
-        while self.parent[root] != root =>
-            root = self.parent[root]
-        # Compress path
-        var curr: int = x
-        while curr != root =>
-            var next: int = self.parent[curr]
-            self.parent[curr] = root
-            curr = next
-        return root
+  fn find(x: int): int =>
+    # Path compression: make every node point directly to root
+    var root: int = x
+    while self.parent[root] != root =>
+      root = self.parent[root]
+    # Compress path
+    var curr: int = x
+    while curr != root =>
+      var next: int = self.parent[curr]
+      self.parent[curr] = root
+      curr = next
+    return root
 
-    fn union(x: int, y: int): void =>
-        var rx: int = self.find(x)
-        var ry: int = self.find(y)
-        if rx == ry =>
-            return
-        # Union by rank
-        if self.rank[rx] < self.rank[ry] =>
-            self.parent[rx] = ry
-        else if self.rank[rx] > self.rank[ry] =>
-            self.parent[ry] = rx
-        else =>
-            self.parent[ry] = rx
-            self.rank[rx] = self.rank[rx] + 1
-        self.count = self.count - 1
+  fn union(x: int, y: int): void =>
+    var rx: int = self.find(x)
+    var ry: int = self.find(y)
+    if rx == ry =>
+      return
+    # Union by rank
+    if self.rank[rx] < self.rank[ry] =>
+      self.parent[rx] = ry
+    else if self.rank[rx] > self.rank[ry] =>
+      self.parent[ry] = rx
+    else =>
+      self.parent[ry] = rx
+      self.rank[rx] = self.rank[rx] + 1
+    self.count = self.count - 1
 
-    fn connected(x: int, y: int): bool =>
-        return self.find(x) == self.find(y)
+  fn connected(x: int, y: int): bool =>
+    return self.find(x) == self.find(y)
 
-    fn componentCount(): int =>
-        return self.count
-
+  fn componentCount(): int =>
+    return self.count

@@ -1,69 +1,69 @@
 import "../src/heap"
 
 struct Score =>
-    value: int
+  value: int
 
-    fn compare(other: Score): int =>
-        if self.value < other.value =>
-            return -1
-        if self.value > other.value =>
-            return 1
-        return 0
+  fn compare(other: Score): int =>
+    if self.value < other.value =>
+      return - 1
+    if self.value > other.value =>
+      return 1
+    return 0
 
 fn main(): void =>
-    # --- Basic min-heap ---
-    var h: MinHeap<Score> = MinHeap<Score>.new()
-    assert(h.isEmpty(), "new heap should be empty")
+  # --- Basic min-heap ---
+  var h: MinHeap < Score > = MinHeap < Score >.new()
+  assert(h.isEmpty(), "new heap should be empty")
 
-    h.push(Score { value: 5 })
-    h.push(Score { value: 1 })
-    h.push(Score { value: 3 })
-    h.push(Score { value: 2 })
-    h.push(Score { value: 4 })
-    assert(h.size() == 5, "size after 5 pushes")
-    assert(h.peek().value == 1, "peek should be min (1)")
+  h.push(Score { value: 5 })
+  h.push(Score { value: 1 })
+  h.push(Score { value: 3 })
+  h.push(Score { value: 2 })
+  h.push(Score { value: 4 })
+  assert(h.size() == 5, "size after 5 pushes")
+  assert(h.peek().value == 1, "peek should be min (1)")
 
-    assert(h.pop().value == 1, "pop 1st should be 1")
-    assert(h.pop().value == 2, "pop 2nd should be 2")
-    assert(h.pop().value == 3, "pop 3rd should be 3")
-    assert(h.pop().value == 4, "pop 4th should be 4")
-    assert(h.pop().value == 5, "pop 5th should be 5")
-    assert(h.isEmpty(), "heap empty after all pops")
-    println("test_heap_basic: PASS")
+  assert(h.pop().value == 1, "pop 1st should be 1")
+  assert(h.pop().value == 2, "pop 2nd should be 2")
+  assert(h.pop().value == 3, "pop 3rd should be 3")
+  assert(h.pop().value == 4, "pop 4th should be 4")
+  assert(h.pop().value == 5, "pop 5th should be 5")
+  assert(h.isEmpty(), "heap empty after all pops")
+  println("test_heap_basic: PASS")
 
-    # --- Reverse order insertion ---
-    var h2: MinHeap<Score> = MinHeap<Score>.new()
-    for i in 0..10 =>
-        h2.push(Score { value: 9 - i })
-    var prev: int = -1
-    for i in 0..10 =>
-        var v: int = h2.pop().value
-        assert(v >= prev, "heap should pop in ascending order")
-        prev = v
-    println("test_heap_reverse: PASS")
+  # --- Reverse order insertion ---
+  var h2: MinHeap < Score > = MinHeap < Score >.new()
+  for i in 0..10 =>
+    h2.push(Score { value: 9 - i })
+  var prev: int = -1
+  for i in 0..10 =>
+    var v: int = h2.pop().value
+    assert(v >= prev, "heap should pop in ascending order")
+    prev = v
+  println("test_heap_reverse: PASS")
 
-    # --- Duplicate values ---
-    var h3: MinHeap<Score> = MinHeap<Score>.new()
-    h3.push(Score { value: 3 })
-    h3.push(Score { value: 1 })
-    h3.push(Score { value: 3 })
-    h3.push(Score { value: 1 })
-    h3.push(Score { value: 2 })
-    assert(h3.pop().value == 1, "dup pop 1")
-    assert(h3.pop().value == 1, "dup pop 2")
-    assert(h3.pop().value == 2, "dup pop 3")
-    assert(h3.pop().value == 3, "dup pop 4")
-    assert(h3.pop().value == 3, "dup pop 5")
-    println("test_heap_duplicates: PASS")
+  # --- Duplicate values ---
+  var h3: MinHeap < Score > = MinHeap < Score >.new()
+  h3.push(Score { value: 3 })
+  h3.push(Score { value: 1 })
+  h3.push(Score { value: 3 })
+  h3.push(Score { value: 1 })
+  h3.push(Score { value: 2 })
+  assert(h3.pop().value == 1, "dup pop 1")
+  assert(h3.pop().value == 1, "dup pop 2")
+  assert(h3.pop().value == 2, "dup pop 3")
+  assert(h3.pop().value == 3, "dup pop 4")
+  assert(h3.pop().value == 3, "dup pop 5")
+  println("test_heap_duplicates: PASS")
 
-    # --- Large heap ---
-    var h4: MinHeap<Score> = MinHeap<Score>.new()
-    for i in 0..1000 =>
-        h4.push(Score { value: 999 - i })
-    assert(h4.size() == 1000, "large heap size")
-    var last: int = -1
-    for i in 0..1000 =>
-        var v: int = h4.pop().value
-        assert(v >= last, "large heap order")
-        last = v
-    println("test_heap_large: PASS")
+  # --- Large heap ---
+  var h4: MinHeap < Score > = MinHeap < Score >.new()
+  for i in 0..1000 =>
+    h4.push(Score { value: 999 - i })
+  assert(h4.size() == 1000, "large heap size")
+  var last: int = -1
+  for i in 0..1000 =>
+    var v: int = h4.pop().value
+    assert(v >= last, "large heap order")
+    last = v
+  println("test_heap_large: PASS")

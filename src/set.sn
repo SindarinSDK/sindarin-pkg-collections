@@ -4,29 +4,29 @@
 # Uses linear scan for lookups. Simple and correct.
 
 interface Hashable =>
-    fn hash(): int
-    fn equals(other: Self): bool
+  fn hash(): int
+  fn equals(other: Self): bool
 
-struct HashSet<T: Hashable> =>
-    items: T[]
-    count: int
+struct HashSet < T: Hashable > =>
+  items: T[]
+  count: int
 
-    static fn new(): HashSet<T> =>
-        return HashSet<T> { items: {}, count: 0 }
+  static fn new(): HashSet < T > =>
+    return HashSet < T > {items: {}, count: 0}
 
-    fn add(item: T): void =>
-        if !self.contains(item) =>
-            self.items.push(item)
-            self.count = self.count + 1
+  fn add(item: T): void =>
+    if !self.contains(item) =>
+      self.items.push(item)
+      self.count = self.count + 1
 
-    fn contains(item: T): bool =>
-        for i in 0..self.count =>
-            if self.items[i].equals(item) =>
-                return true
-        return false
+  fn contains(item: T): bool =>
+    for i in 0..self.count =>
+      if self.items[i].equals(item) =>
+        return true
+    return false
 
-    fn size(): int =>
-        return self.count
+  fn size(): int =>
+    return self.count
 
-    fn isEmpty(): bool =>
-        return self.count == 0
+  fn isEmpty(): bool =>
+    return self.count == 0
