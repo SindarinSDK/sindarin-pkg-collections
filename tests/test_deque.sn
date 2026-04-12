@@ -1,7 +1,7 @@
 import "../src/deque"
 
 fn main(): void =>
-  var d: Deque < int > = Deque < int >.new()
+  var d: Deque<int> = Deque < int >.new()
   assert(d.isEmpty(), "new deque empty")
 
   # Push back
@@ -19,7 +19,7 @@ fn main(): void =>
   println("test_deque_basic: PASS")
 
   # Push front
-  var d2: Deque < int > = Deque < int >.new()
+  var d2: Deque<int> = Deque < int >.new()
   d2.pushBack(2)
   d2.pushBack(3)
   d2.pushFront(1)
@@ -30,7 +30,7 @@ fn main(): void =>
   println("test_deque_pushfront: PASS")
 
   # Pop back
-  var d3: Deque < int > = Deque < int >.new()
+  var d3: Deque<int> = Deque < int >.new()
   d3.pushBack(10)
   d3.pushBack(20)
   d3.pushBack(30)
@@ -40,7 +40,7 @@ fn main(): void =>
   println("test_deque_popback: PASS")
 
   # Iteration
-  var d4: Deque < int > = Deque < int >.new()
+  var d4: Deque<int> = Deque < int >.new()
   d4.pushBack(1)
   d4.pushBack(2)
   d4.pushBack(3)

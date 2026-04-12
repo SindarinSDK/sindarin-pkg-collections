@@ -1,6 +1,6 @@
 # Queue<T> — FIFO queue backed by a dynamic array with head pointer
 
-struct QueueIter < T > =>
+struct QueueIter<T> =>
   items: T[]
   head: int
   remaining: int
@@ -14,13 +14,17 @@ struct QueueIter < T > =>
     self.remaining = self.remaining - 1
     return v
 
-struct Queue < T > =>
+struct Queue<T> =>
   items: T[]
   head: int
   count: int
 
-  static fn new(): Queue < T > =>
-    return Queue < T > {items: {}, head: 0, count: 0}
+  static fn new(): Queue<T> =>
+    return Queue<T> {
+      items: {},
+      head: 0,
+      count: 0
+    }
 
   fn enqueue(item: T): void =>
     self.items.push(item)
@@ -48,5 +52,9 @@ struct Queue < T > =>
   fn isEmpty(): bool =>
     return self.count == 0
 
-  fn iter(): QueueIter < T > =>
-    return QueueIter < T > {items: self.items, head: self.head, remaining: self.count}
+  fn iter(): QueueIter<T> =>
+    return QueueIter<T> {
+      items: self.items,
+      head: self.head,
+      remaining: self.count
+    }

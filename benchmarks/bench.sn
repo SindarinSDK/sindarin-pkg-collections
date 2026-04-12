@@ -35,7 +35,7 @@ fn main(): void =>
   print("=========================================\n\n")
 
   # List<int>: 100k push + get + set + pop
-  var l: List < int > = List < int >.new()
+  var l: List<int> = List < int >.new()
   for i in 0..n =>
     l.push(i)
   for i in 0..n =>
@@ -47,7 +47,7 @@ fn main(): void =>
   print("  List<int>:    100k push + 100k get + 100k set + 100k pop\n")
 
   # Stack<int>: 100k push + pop
-  var s: Stack < int > = Stack < int >.new()
+  var s: Stack<int> = Stack < int >.new()
   for i in 0..n =>
     s.push(i)
   while !s.isEmpty() =>
@@ -55,7 +55,7 @@ fn main(): void =>
   print("  Stack<int>:   100k push + 100k pop\n")
 
   # Queue<int>: 100k enqueue + dequeue
-  var q: Queue < int > = Queue < int >.new()
+  var q: Queue<int> = Queue < int >.new()
   for i in 0..n =>
     q.enqueue(i)
   while !q.isEmpty() =>
@@ -63,7 +63,7 @@ fn main(): void =>
   print("  Queue<int>:   100k enqueue + 100k dequeue\n")
 
   # Deque<int>: 100k pushBack + popFront
-  var d: Deque < int > = Deque < int >.new()
+  var d: Deque<int> = Deque < int >.new()
   for i in 0..n =>
     d.pushBack(i)
   while !d.isEmpty() =>
@@ -71,7 +71,7 @@ fn main(): void =>
   print("  Deque<int>:   100k pushBack + 100k popFront\n")
 
   # MinHeap<Score>: 100k push + pop (reverse order)
-  var h: MinHeap < Score > = MinHeap < Score >.new()
+  var h: MinHeap<Score> = MinHeap < Score >.new()
   for i in 0..n =>
     h.push(Score { value: n - i })
   while !h.isEmpty() =>
@@ -79,7 +79,7 @@ fn main(): void =>
   print("  MinHeap:      100k push + 100k pop (reverse input)\n")
 
   # HashSet<IntKey>: 5k add + contains (O(n) scan)
-  var hs: HashSet < IntKey > = HashSet < IntKey >.new()
+  var hs: HashSet<IntKey> = HashSet < IntKey >.new()
   for i in 0..n_hash =>
     hs.add(IntKey { value: i })
   for i in 0..n_hash =>
@@ -87,7 +87,7 @@ fn main(): void =>
   print("  HashSet:      5k add + 5k contains\n")
 
   # HashMap<IntKey, int>: 5k set + has + get (O(n) scan)
-  var hm: HashMap < IntKey, int > = HashMap < IntKey, int >.new()
+  var hm: HashMap<IntKey, int> = HashMap < IntKey, int >.new()
   for i in 0..n_hash =>
     hm.set(IntKey { value: i }, i * 10)
   for i in 0..n_hash =>

@@ -1,7 +1,7 @@
 import "../src/stack"
 
 fn main(): void =>
-  var s: Stack < int > = Stack < int >.new()
+  var s: Stack<int> = Stack < int >.new()
   assert(s.isEmpty(), "new stack empty")
   assert(s.size() == 0, "new stack size")
 
@@ -18,7 +18,7 @@ fn main(): void =>
   println("test_stack_basic: PASS")
 
   # Stack<str>
-  var ss: Stack < str > = Stack < str >.new()
+  var ss: Stack<str> = Stack < str >.new()
   ss.push("a")
   ss.push("b")
   ss.push("c")

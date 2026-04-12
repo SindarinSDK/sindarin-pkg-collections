@@ -12,7 +12,7 @@ struct Score =>
 
 fn main(): void =>
   # --- Basic min-heap ---
-  var h: MinHeap < Score > = MinHeap < Score >.new()
+  var h: MinHeap<Score> = MinHeap < Score >.new()
   assert(h.isEmpty(), "new heap should be empty")
 
   h.push(Score { value: 5 })
@@ -32,7 +32,7 @@ fn main(): void =>
   println("test_heap_basic: PASS")
 
   # --- Reverse order insertion ---
-  var h2: MinHeap < Score > = MinHeap < Score >.new()
+  var h2: MinHeap<Score> = MinHeap < Score >.new()
   for i in 0..10 =>
     h2.push(Score { value: 9 - i })
   var prev: int = -1
@@ -43,7 +43,7 @@ fn main(): void =>
   println("test_heap_reverse: PASS")
 
   # --- Duplicate values ---
-  var h3: MinHeap < Score > = MinHeap < Score >.new()
+  var h3: MinHeap<Score> = MinHeap < Score >.new()
   h3.push(Score { value: 3 })
   h3.push(Score { value: 1 })
   h3.push(Score { value: 3 })
@@ -57,7 +57,7 @@ fn main(): void =>
   println("test_heap_duplicates: PASS")
 
   # --- Large heap ---
-  var h4: MinHeap < Score > = MinHeap < Score >.new()
+  var h4: MinHeap<Score> = MinHeap < Score >.new()
   for i in 0..1000 =>
     h4.push(Score { value: 999 - i })
   assert(h4.size() == 1000, "large heap size")

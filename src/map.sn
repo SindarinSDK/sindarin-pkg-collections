@@ -7,11 +7,11 @@ interface Hashable =>
   fn hash(): int
   fn equals(other: Self): bool
 
-struct Entry < K, V > =>
+struct Entry<K, V> =>
   key: K
   value: V
 
-struct HashMapIter < K, V > =>
+struct HashMapIter<K, V> =>
   keys: K[]
   values: V[]
   index: int
@@ -20,19 +20,26 @@ struct HashMapIter < K, V > =>
   fn hasNext(): bool =>
     return self.index < self.count
 
-  fn next(): Entry < K, V > =>
+  fn next(): Entry<K, V> =>
     var k: K = self.keys[self.index]
     var v: V = self.values[self.index]
     self.index = self.index + 1
-    return Entry < K, V > {key: k, value: v}
+    return Entry<K, V> {
+      key: k,
+      value: v
+    }
 
 struct HashMap < K: Hashable, V > =>
   keys: K[]
   values: V[]
   count: int
 
-  static fn new(): HashMap < K, V > =>
-    return HashMap < K, V > {keys: {}, values: {}, count: 0}
+  static fn new(): HashMap<K, V> =>
+    return HashMap<K, V> {
+      keys: {},
+      values: {},
+      count: 0
+    }
 
   fn set(key: K, value: V): void =>
     for i in 0..self.count =>
@@ -61,5 +68,10 @@ struct HashMap < K: Hashable, V > =>
   fn isEmpty(): bool =>
     return self.count == 0
 
-  fn iter(): HashMapIter < K, V > =>
-    return HashMapIter < K, V > {keys: self.keys, values: self.values, index: 0, count: self.count}
+  fn iter(): HashMapIter<K, V> =>
+    return HashMapIter<K, V> {
+      keys: self.keys,
+      values: self.values,
+      index: 0,
+      count: self.count
+    }

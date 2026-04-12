@@ -1,6 +1,6 @@
 # Deque<T> — Double-ended queue backed by a dynamic array with head pointer
 
-struct DequeIter < T > =>
+struct DequeIter<T> =>
   items: T[]
   head: int
   remaining: int
@@ -14,13 +14,17 @@ struct DequeIter < T > =>
     self.remaining = self.remaining - 1
     return v
 
-struct Deque < T > =>
+struct Deque<T> =>
   items: T[]
   head: int
   count: int
 
-  static fn new(): Deque < T > =>
-    return Deque < T > {items: {}, head: 0, count: 0}
+  static fn new(): Deque<T> =>
+    return Deque<T> {
+      items: {},
+      head: 0,
+      count: 0
+    }
 
   fn pushBack(item: T): void =>
     self.items.push(item)
@@ -65,5 +69,9 @@ struct Deque < T > =>
   fn isEmpty(): bool =>
     return self.count == 0
 
-  fn iter(): DequeIter < T > =>
-    return DequeIter < T > {items: self.items, head: self.head, remaining: self.count}
+  fn iter(): DequeIter<T> =>
+    return DequeIter<T> {
+      items: self.items,
+      head: self.head,
+      remaining: self.count
+    }
